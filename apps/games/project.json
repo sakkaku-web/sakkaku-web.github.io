@@ -1,0 +1,8 @@
+{
+  "name": "games",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/games/src",
+  "projectType": "application",
+  "targets": {},
+  "tags": []
+}
