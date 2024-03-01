@@ -1,0 +1,8 @@
+{
+  "name": "timers",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/timers/src",
+  "projectType": "application",
+  "targets": {},
+  "tags": []
+}
