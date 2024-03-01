@@ -1,51 +1,40 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-
-import NxWelcome from './nx-welcome';
-
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, NavLink, redirect } from 'react-router-dom';
+import { Taboo } from './taboo';
+import { Yahtzee } from './yahtzee';
 
 export function App() {
-  return (
-    <div>
-      <NxWelcome title="games" />
+  const links = [
+    { link: '/taboo', name: 'Taboo', component: Taboo },
+    { link: '/yahtzee', name: 'Yahtzee', component: Yahtzee },
+  ];
 
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
+  return (
+    <div className="flex flex-col h-full">
+      <div className="grow">
+        <Routes>
+          <Route path="/" loader={async () => redirect('/taboo')}></Route>
+          <Route path="/taboo" element={<Taboo />}></Route>
+          <Route path="/yahtzee" element={<Yahtzee />}></Route>
+        </Routes>
+      </div>
       <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
+        <ul className="flex border-t bg-slate-100">
+          {links.map((l) => (
+            <li key={l.link}>
+              <NavLink
+                className={({ isActive }) =>
+                  `px-4 py-2 block border-r ${
+                    isActive ? 'bg-slate-500' : 'hover:bg-slate-300'
+                  }`
+                }
+                to={l.link}
+              >
+                {l.name}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
     </div>
   );
 }

@@ -2,7 +2,9 @@
   "name": "@sakkaku-web/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build:all": "nx run-many -t build"
+  },
   "private": true,
   "dependencies": {
     "date-fns": "^3.3.1",
