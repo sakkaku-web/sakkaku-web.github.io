@@ -1,4 +1,4 @@
-import { Route, Routes, NavLink, redirect } from 'react-router-dom';
+import { Route, Routes, NavLink } from 'react-router-dom';
 import { Taboo } from './taboo';
 import { Yahtzee } from './yahtzee';
 
@@ -10,9 +10,9 @@ export function App() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="grow">
+      <div className="grow p-2">
         <Routes>
-          <Route path="/" loader={async () => redirect('/taboo')}></Route>
+          <Route path="/" element={'Select a game below...'}></Route>
           <Route path="/taboo" element={<Taboo />}></Route>
           <Route path="/yahtzee" element={<Yahtzee />}></Route>
         </Routes>

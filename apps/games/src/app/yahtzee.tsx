@@ -108,7 +108,7 @@ export function Yahtzee() {
   };
 
   return (
-    <div className="flex flex-col gap-2 max-w-xl p-4">
+    <div className="flex flex-col gap-2 max-w-xl p-2">
       <button
         className="bg-slate-100 py-2 hover:bg-slate-300"
         onClick={() => onReset()}
