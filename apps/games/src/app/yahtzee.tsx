@@ -3,6 +3,14 @@ import { GiInfo } from 'react-icons/gi';
 
 const YAHTZEE_KEY = 'sakkaku-web-games-yahtzee';
 
+interface Data {
+  field: string;
+  name: string;
+  desc: string;
+  score?: string;
+  fixedScore?: number;
+}
+
 export function Yahtzee() {
   const rows = [
     {
@@ -102,11 +110,33 @@ export function Yahtzee() {
     localStorage.setItem(YAHTZEE_KEY, JSON.stringify(updated));
   };
 
+  const removeField = (field: string) => {
+    const updated = { ...values };
+    delete updated[field];
+    setValues(updated);
+    localStorage.setItem(YAHTZEE_KEY, JSON.stringify(updated));
+  }
+
+  const onCheckboxChange = (data: Data) => {
+    if (values[data.field] === 0) {
+      removeField(data.field);
+      return;
+    }
+    
+    if (values[data.field] > 0) {
+      onChange(0, data.field);
+      return;
+    }
+
+    onChange(data.fixedScore ?? 0, data.field);
+  };
+
   const onReset = () => {
     setValues({});
     localStorage.removeItem(YAHTZEE_KEY);
   };
 
+  console.log(values);
   return (
     <div className="flex flex-col gap-2 max-w-xl p-2">
       <button
@@ -130,13 +160,17 @@ export function Yahtzee() {
               <td className="p-2 text-right">
                 {(r.fixedScore && (
                   <div className="flex gap-4 justify-end">
-                    {r.fixedScore}
+                    <label htmlFor={r.field}>{r.fixedScore}</label>
                     <input
+                      id={r.field}
                       type="checkbox"
+                      ref={input => {
+                        if (input) {
+                          input.indeterminate = values[r.field] === 0;
+                        }
+                      }}
                       checked={values[r.field] > 0}
-                      onChange={(e) =>
-                        onChange(e.target.checked ? r.fixedScore : 0, r.field)
-                      }
+                      onChange={(e) => onCheckboxChange(r)}
                     />
                   </div>
                 )) || (
