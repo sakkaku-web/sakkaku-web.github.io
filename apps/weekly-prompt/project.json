@@ -1,0 +1,8 @@
+{
+  "name": "weekly-prompt",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/weekly-prompt/src",
+  "projectType": "application",
+  "targets": {},
+  "tags": []
+}

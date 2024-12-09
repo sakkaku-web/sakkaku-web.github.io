@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm install && npm run build
+      - run: mv dist/apps/homepage/* dist/apps/ && rmdir dist/apps/homepage
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
           BRANCH: gh-pages

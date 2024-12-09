@@ -1,0 +1,8 @@
+{
+  "name": "homepage",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/homepage/src",
+  "projectType": "application",
+  "targets": {},
+  "tags": []
+}
