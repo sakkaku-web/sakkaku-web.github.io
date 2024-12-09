@@ -15,6 +15,8 @@ import { useStopwatch } from 'react-timer-hook';
 
 export interface TimerProps {
   name: string;
+  countdownTime: number;
+  showDetails: boolean;
   onDelete: (name: string) => void;
   onStateChange?: (running: boolean) => void;
   onTime?: (elapsed: number, elapsedPomodoro: number) => void;
@@ -24,9 +26,14 @@ const TIMER_KEY_PREFIX = 'sakkaku-web-timers-timer-';
 const TIMER_START_KEY_PREFIX = 'sakkaku-web-timers-timerStart-';
 const TIMER_LAPS_KEY_PREFIX = 'sakkaku-web-timers-timerLaps-';
 
-const POMODORO_MINUTES = 25;
-
-export function Timer({ name, onDelete, onTime, onStateChange }: TimerProps) {
+export function Timer({
+  name,
+  countdownTime,
+  showDetails,
+  onDelete,
+  onTime,
+  onStateChange,
+}: TimerProps) {
   const saveKey = TIMER_KEY_PREFIX + name;
   const startTimeKey = TIMER_START_KEY_PREFIX + name;
   const lapsKey = TIMER_LAPS_KEY_PREFIX + name;
@@ -49,8 +56,7 @@ export function Timer({ name, onDelete, onTime, onStateChange }: TimerProps) {
   const [startTime, setStartTime] = useState(loadStartTime());
   const [timerLaps, setTimerLaps] = useState(loadLaps());
   const [pomodoroStart, setPomodoroStart] = useState(null as number | null);
-  const [pomodoroMinutes, setPomodoroMinutes] = useState(POMODORO_MINUTES);
-  const [countdownTime, setCountdownTime] = useState(POMODORO_MINUTES);
+  const [pomodoroMinutes, setPomodoroMinutes] = useState(0);
 
   const soundRef = useRef<HTMLAudioElement>(null);
 
@@ -186,19 +192,15 @@ export function Timer({ name, onDelete, onTime, onStateChange }: TimerProps) {
   }, [isRunning, timeInSec, updateStartTime]);
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div
+      className={`flex flex-col items-center gap-2 ${
+        !isRunning && 'text-slate-500'
+      }`}
+    >
       <audio ref={soundRef} src="assets/notification.wav" />
-      <h2 className="font-bold text-3xl flex flex-col items-center">
-        {name}
-        {startTime && (
-          <span className="text-xs text-slate-500 dark:text-slate-300">
-            {format(startTime, 'dd.MM.yyyy')}
-          </span>
-        )}
-      </h2>
+      <h2 className="font-bold text-3xl flex flex-col items-center">{name}</h2>
       <div className="flex flex-col items-center">
         <span className="font-bold">{timeStr(timeInSec)}</span>
-        <TimerLaps laps={timerLaps} onChange={saveLaps} />
       </div>
       <div className="flex flex-row gap-1">
         {isRunning && (
@@ -208,46 +210,62 @@ export function Timer({ name, onDelete, onTime, onStateChange }: TimerProps) {
         )}
 
         {!isRunning && (
-          <button aria-label="play" onClick={() => setRunningState(true)}>
-            <IoMdPlay />
-          </button>
+          <>
+            <button aria-label="play" onClick={() => setRunningState(true)}>
+              <IoMdPlay />
+            </button>
+            <button
+              aria-label="start pomodoro timer"
+              onClick={() => togglePomodoroTimer()}
+              className={pomodoroStart != null ? 'text-red-500' : ''}
+            >
+              <GiTomato />
+            </button>
+          </>
         )}
 
-        <button
-          aria-label="start pomodoro timer"
-          onClick={() => togglePomodoroTimer()}
-          className={pomodoroStart != null ? 'text-red-500' : ''}
-        >
-          <GiTomato />
-        </button>
+        {startTime != null && (
+          <>
+            {showDetails && (
+              <button aria-label="lap" onClick={() => addLap()}>
+                <IoMdFlag />
+              </button>
+            )}
 
-        <button aria-label="lap" onClick={() => addLap()}>
-          <IoMdFlag />
-        </button>
+            <button aria-label="reset" onClick={() => resetTime()}>
+              <IoMdRefresh />
+            </button>
+          </>
+        )}
 
-        <button aria-label="reset" onClick={() => resetTime()}>
-          <IoMdRefresh />
-        </button>
-
-        <button aria-label="delete" onClick={() => deleteTimer()}>
-          <IoMdTrash />
-        </button>
+        {startTime == null && (
+          <button aria-label="delete" onClick={() => deleteTimer()}>
+            <IoMdTrash />
+          </button>
+        )}
       </div>
 
-      <div className="flex flex-col gap-2 items-center">
-        {pomodoroStart != null && (
+      {pomodoroStart != null && (
+        <div className="flex flex-col gap-2 items-center">
           <span className="text-slate-500 dark:text-slate-300 text-xs text-center">
             Running countdown {pomodoroMinutes}m
           </span>
-        )}
-        <input
-          className="rounded outline-0 ring-inset ring-1 ring-slate-200 bg-slate-50 hover:ring-slate-400 dark:ring-slate-700 dark:bg-slate-900 w-1/2"
-          placeholder="Countdown in min"
-          type="number"
-          value={countdownTime}
-          onChange={(e) => setCountdownTime(e.target.valueAsNumber)}
-        />
-      </div>
+        </div>
+      )}
+      {showDetails && (
+        <>
+          {startTime && (
+            <span className="text-xs text-slate-500 dark:text-slate-300">
+              Started at{' '}
+              <span title={startTime.toISOString()}>
+                {format(startTime, 'dd.MM.yyyy')}
+              </span>
+            </span>
+          )}
+
+          <TimerLaps laps={timerLaps} onChange={saveLaps} />
+        </>
+      )}
     </div>
   );
 }

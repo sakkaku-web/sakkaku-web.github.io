@@ -1,4 +1,4 @@
-import { add, intervalToDuration } from 'date-fns';
+import { Duration, add, intervalToDuration } from 'date-fns';
 
 const prefixZero = (num?: number): string => {
   if (!num) {
