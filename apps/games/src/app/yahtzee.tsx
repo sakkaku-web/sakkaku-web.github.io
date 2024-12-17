@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { GiInfo } from 'react-icons/gi';
+import { Button } from './button';
 
 const YAHTZEE_KEY = 'sakkaku-web-games-yahtzee';
 
@@ -115,14 +116,14 @@ export function Yahtzee() {
     delete updated[field];
     setValues(updated);
     localStorage.setItem(YAHTZEE_KEY, JSON.stringify(updated));
-  }
+  };
 
   const onCheckboxChange = (data: Data) => {
     if (values[data.field] === 0) {
       removeField(data.field);
       return;
     }
-    
+
     if (values[data.field] > 0) {
       onChange(0, data.field);
       return;
@@ -139,12 +140,7 @@ export function Yahtzee() {
   console.log(values);
   return (
     <div className="flex flex-col gap-2 max-w-xl p-2">
-      <button
-        className="bg-slate-100 py-2 hover:bg-slate-300"
-        onClick={() => onReset()}
-      >
-        Reset
-      </button>
+      <Button onClick={() => onReset()}>Reset</Button>
       <table>
         <tbody>
           {rows.map((r) => (
@@ -164,7 +160,7 @@ export function Yahtzee() {
                     <input
                       id={r.field}
                       type="checkbox"
-                      ref={input => {
+                      ref={(input) => {
                         if (input) {
                           input.indeterminate = values[r.field] === 0;
                         }

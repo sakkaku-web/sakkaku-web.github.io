@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Button } from './button';
 
 const TABOO_KEY = 'sakkaku-web-games-taboo';
 
@@ -62,26 +63,11 @@ export function Taboo() {
           onKeyDown={(e) => e.key === 'Enter' && addTeam()}
           value={newTeam}
         />
-        <button
-          className="p-2 bg-slate-100 hover:bg-slate-300"
-          onClick={() => addTeam()}
-        >
-          Add
-        </button>
+        <Button onClick={() => addTeam()}>Add</Button>
         {teams.length > 0 && (
           <>
-            <button
-              className="p-2 bg-slate-100 hover:bg-slate-300"
-              onClick={() => resetPoints()}
-            >
-              Reset Points
-            </button>
-            <button
-              className="p-2 bg-slate-100 hover:bg-slate-300"
-              onClick={() => resetTeams()}
-            >
-              Reset Game
-            </button>
+            <Button onClick={() => resetPoints()}>Reset Points</Button>
+            <Button onClick={() => resetTeams()}>Reset Game</Button>
           </>
         )}
       </div>
