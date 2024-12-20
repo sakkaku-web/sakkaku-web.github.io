@@ -2,12 +2,14 @@ import { Route, Routes, NavLink } from 'react-router-dom';
 import { Taboo } from './taboo';
 import { Yahtzee } from './yahtzee';
 import { CodeNames } from './codenames';
+import { RichiMahjong } from './richi-mahjong';
 
 export function App() {
   const links = [
     { link: '/taboo', name: 'Taboo' },
     { link: '/yahtzee', name: 'Yahtzee', },
     { link: '/codenames', name: 'Codenames' },
+    { link: '/richi-mahjong', name: 'Richi Mahjong' },
   ];
 
   return (
@@ -18,6 +20,7 @@ export function App() {
           <Route path="/taboo" element={<Taboo />}></Route>
           <Route path="/yahtzee" element={<Yahtzee />}></Route>
           <Route path="/codenames" element={<CodeNames />}></Route>
+          <Route path="/richi-mahjong" element={<RichiMahjong />}></Route>
         </Routes>
       </div>
       <nav>
