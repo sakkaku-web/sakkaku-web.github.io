@@ -11,6 +11,7 @@ import {
   YakuType,
   allTiles,
 } from './richi-yaku';
+import img from '../assets/mahjong.webp';
 
 function MahjongTile({
   tile,
@@ -63,8 +64,8 @@ export function RichiMahjong() {
   };
 
   return (
-    <div className="p-2 h-full flex flex-col gap-4">
-      <div className="grid grid-cols-9">
+    <div className="h-full flex flex-col gap-4">
+      {/* <div className="grid grid-cols-9">
         {allTiles.map((tile) => (
           <MahjongTile
             key={tile}
@@ -73,10 +74,15 @@ export function RichiMahjong() {
             onClick={(tile) => toggleTile(tile)}
           />
         ))}
-      </div>
+      </div> */}
 
       <div className="flex flex-col gap-2">
-        {YAKU_SEQUENCE.map((yaku) => (
+        <img src={img} alt='mahjong cheatsheet' />
+        <a className='text-xs text-gray-500 underline' href="https://www.reddit.com/r/Mahjong/comments/17fehk6/alternative_riichi_yakus_cheatsheet_for_beginners/">
+          Source
+        </a>
+
+        {/* {YAKU_SEQUENCE.map((yaku) => (
           <YakuTileList key={yaku} yaku={yaku} />
         ))}
         {YAKU_TERMINAL_HONOR.map((yaku) => (
@@ -90,7 +96,7 @@ export function RichiMahjong() {
         ))}
         {YAKU_OTHERS.map((yaku) => (
           <YakuTileList key={yaku} yaku={yaku} />
-        ))}
+        ))} */}
       </div>
     </div>
   );

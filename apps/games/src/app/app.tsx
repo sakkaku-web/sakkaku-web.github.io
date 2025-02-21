@@ -9,7 +9,7 @@ export function App() {
     { link: '/taboo', name: 'Taboo' },
     { link: '/yahtzee', name: 'Yahtzee', },
     { link: '/codenames', name: 'Codenames' },
-    { link: '/richi-mahjong', name: 'Richi Mahjong' },
+    { link: '/mahjong', name: 'Mahjong' },
   ];
 
   return (
@@ -20,7 +20,7 @@ export function App() {
           <Route path="/taboo" element={<Taboo />}></Route>
           <Route path="/yahtzee" element={<Yahtzee />}></Route>
           <Route path="/codenames" element={<CodeNames />}></Route>
-          <Route path="/richi-mahjong" element={<RichiMahjong />}></Route>
+          <Route path="/mahjong" element={<RichiMahjong />}></Route>
         </Routes>
       </div>
       <nav>
